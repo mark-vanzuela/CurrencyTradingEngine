@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using CurrencyTradingEngine.Money.Domain.Event;
 using CurrencyTradingEngine.Money.Domain.Exception;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,16 @@ namespace CurrencyTradingEngine.Money.Domain.Model
         public List<CurrencyBalance> CurrencyBalances { get; set; }
         public int UserId { get; set; }
         public User.Domain.Model.User User { get; set; }
-  
+
+
+        public event EventHandler<OnAddMoneyEventArgs> OnAddMoneyEvent;
+        public event EventHandler<OnChargeMoneyEventArgs> OnChargeMoneyEvent;
+
+        public Balance()
+        {
+            OnAddMoneyEvent += RespondToOnAddMoneyEvent;
+            OnChargeMoneyEvent += RespondToOnChargeEvent;
+        }
 
         public void Exchange(Money money, Currency to)
         {
@@ -40,6 +50,8 @@ namespace CurrencyTradingEngine.Money.Domain.Model
             {
                 CurrencyBalances.Add(new CurrencyBalance() {Amount = money.Amount, Currency = money.Currency});
             }
+
+            OnAddMoneyEvent?.Invoke(this, new OnAddMoneyEventArgs() { UserId = UserId, CurrencyName = money.Currency.Name, Amount = money.Amount });
         }
 
         public void ChargeMoney(Money money)
@@ -53,6 +65,8 @@ namespace CurrencyTradingEngine.Money.Domain.Model
             {
                 CurrencyBalances.Add(new CurrencyBalance() { Amount = money.Amount * -1, Currency = money.Currency });
             }
+
+            OnChargeMoneyEvent?.Invoke(this, new OnChargeMoneyEventArgs() { UserId = UserId, CurrencyName = money.Currency.Name, Amount = money.Amount });
         }
 
         private void HasEnoughMoneyInBalance(Money money)
@@ -68,6 +82,16 @@ namespace CurrencyTradingEngine.Money.Domain.Model
                 if (moneyInBalance < money.Amount)
                     throw new InsufficientBalanceException();
             }
+        }
+
+        private void RespondToOnChargeEvent(object sender, OnChargeMoneyEventArgs e)
+        {
+            //process event args here
+        }
+
+        private void RespondToOnAddMoneyEvent(object sender, OnAddMoneyEventArgs e)
+        {
+            //process event args here
         }
     }
     

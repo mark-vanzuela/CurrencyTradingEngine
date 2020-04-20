@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using CurrencyTradingEngine.Money.Domain.Event;
 using CurrencyTradingEngine.Money.Domain.Exception;
 using CurrencyTradingEngine.Money.Domain.Model;
 
@@ -35,6 +36,8 @@ namespace CurrencyTradingEngine.User.Domain.Model
             this.Balance.ChargeMoney(money);
             userTo.ReceiveMoney(money);
         }
+
+       
 
 
     }
