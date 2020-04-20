@@ -28,3 +28,6 @@ JSON payload: {"FromCurrencyName":"USD", "ToCurrencyName": "PHP", "Amount": 50.0
 Initialized Users:
 UserId: 1 UserName: "User1" Default Balance: 100 USD
 UserId: 2 UserName: "User2" Default Balance: 100 USD
+
+Supported Currency (initialized)
+USD, PHP, AUD, EUR, GBP
