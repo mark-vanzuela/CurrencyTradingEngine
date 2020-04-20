@@ -20,7 +20,8 @@ namespace CurrencyTradingEngine.Money.Domain.Model
         {
             HasEnoughMoneyInBalance(money);
             var ratioBetweenCurrencies = money.Currency.Ratio / to.Ratio;
-            
+            AddMoney(new Money(to, ((double) Math.Round(money.Amount * ratioBetweenCurrencies * 100) / 100)));
+            ChargeMoney(money);
         }
 
         public IList<Money> GetAllMoney()

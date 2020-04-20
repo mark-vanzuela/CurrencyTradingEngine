@@ -1,4 +1,6 @@
-﻿using CurrencyTradingEngine.Money.Application;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using CurrencyTradingEngine.Money.Application;
 using CurrencyTradingEngine.Money.Application.Request;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,9 +22,9 @@ namespace CurrencyTradingEngine.Money.Infrastructure
 
         [HttpGet]
         [Route("balance")]
-        public IActionResult Balance(string token)
+        public async Task<ActionResult<IDictionary<string, double>>> Balance(string token)
         {
-            var result = _moneyFacade.UserBalance(token);
+            var result = await _moneyFacade.UserBalance(token);
             return Ok(result);
         }
 

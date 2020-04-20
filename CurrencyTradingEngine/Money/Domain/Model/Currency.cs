@@ -7,11 +7,11 @@ namespace CurrencyTradingEngine.Money.Domain.Model
 {
     public class Currency
     {
-        public string CurrencyId { get; set; }
+        public int CurrencyId { get; set; }
         public  string Name { get; set; }
-        public decimal Ratio { get; set; }
+        public double Ratio { get; set; }
 
-        public Currency(string name, decimal ratio)
+        public Currency(string name, double ratio)
         {
             Name = name;
             Ratio = ratio;

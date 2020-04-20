@@ -8,8 +8,8 @@ namespace CurrencyTradingEngine.Money.Application
 {
     public interface IMoneyFacade
     {
-        public void Exchange(MoneyExchangeRequest moneyExchangeRequest, string token);
-        public Dictionary<string, double> UserBalance(string token);
-        void Send(SendMoneyRequest sendMoneyRequest, string token);
+        Task Exchange(MoneyExchangeRequest moneyExchangeRequest, string token);
+        Task<Dictionary<string, double>> UserBalance(string token);
+        Task Send(SendMoneyRequest sendMoneyRequest, string token);
     }
 }
